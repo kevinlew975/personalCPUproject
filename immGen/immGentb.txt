@@ -1,0 +1,29 @@
+`timescale 1ns / 1ps
+module immGen_tb();
+reg imm_Control_6;
+reg imm_Control_3;
+reg reset;
+reg [15:0] instructionIn;
+wire [15:0] rs2Value;
+
+immGen test(.imm_Control_6(imm_Control_6), .imm_Control_3(imm_Control_3),
+            .reset(reset), .instructionIn(instructionIn), .rs2Value(rs2Value));
+            
+initial begin
+    reset = 0;
+    imm_Control_6 = 0;
+    imm_Control_3 = 0;
+    instructionIn = 16'b0000001111111111;
+    #5;
+    imm_Control_6 = 1;
+    #5;
+    imm_Control_6=0;
+    imm_Control_3=1;
+    #5;
+    imm_Control_3=0;
+    reset=1;
+    #5;
+    $finish;
+    
+end
+endmodule

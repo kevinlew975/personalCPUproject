@@ -1,0 +1,77 @@
+`timescale 1ns / 1ps
+module registerFile(input reset,
+                    input writeRegEn,
+                    input [15:0] writeDataIn,
+                    input [15:0] dataIn,
+                    output reg [15:0] dataOut,
+                    output reg [15:0] rs1Value,
+                    output reg [15:0] rs2Value);
+                    
+reg [7:0] regArray [15:0];
+integer i;
+integer l;
+integer k;
+integer m;
+reg [2:0] rdNum;
+reg [2:0] rs1Num;
+reg [2:0] rs2Num;
+
+
+
+always @(*) begin
+    for (m=0;m<3;m=m+1) begin
+        rdNum[m] = dataIn[m+9];
+        rs1Num[m] = dataIn[m+6];
+        rs2Num[m] = dataIn[m+3];
+    end
+    
+    if(reset==1'b1) begin
+        for (i=0;i<16;i=i+1) begin
+            dataOut[i] = 1'b0;
+            rs1Value[i] = 1'b0;
+            rs2Value[i] = 1'b0;
+        end 
+    end //reset high
+    if(reset==1'b0) begin 
+        //output rs1 16 bits
+        case(rs1Num)
+            3'b000 : rs1Value = regArray[0];
+            3'b001 : rs1Value = regArray[1];
+            3'b010 : rs1Value = regArray[2];
+            3'b011 : rs1Value = regArray[3];
+            3'b100 : rs1Value = regArray[4];
+            3'b101 : rs1Value = regArray[5];
+            3'b110 : rs1Value = regArray[6];
+            3'b111 : rs1Value = regArray[7];
+        endcase
+        //output rs2 16 bits
+        case(rs2Num)
+            3'b000 : rs2Value = regArray[0];
+            3'b001 : rs2Value = regArray[1];
+            3'b010 : rs2Value = regArray[2];
+            3'b011 : rs2Value = regArray[3];
+            3'b100 : rs2Value = regArray[4];
+            3'b101 : rs2Value = regArray[5];
+            3'b110 : rs2Value = regArray[6];
+            3'b111 : rs2Value = regArray[7];
+        endcase
+    end//reset low
+    if(writeRegEn==1'b1) begin
+        case(rdNum)
+            3'b000 : regArray[0] = 16'b0000000000000000; //perm ground
+            3'b001 : l = 1;
+            3'b010 : l = 2;
+            3'b011 : l = 3;
+            3'b100 : l = 4;
+            3'b101 : l = 5;
+            3'b110 : l = 6;
+            3'b111 : l = 7;
+        endcase
+        for (k=0;k<16;k=k+1) begin
+            regArray[l][k] = writeDataIn[k];
+        end
+    end//writeRegEn high
+end//always                    
+                    
+endmodule
+

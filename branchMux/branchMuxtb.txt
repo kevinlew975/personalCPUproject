@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module branchMux_tb();
+reg branch;
+reg [15:0] adderOut;
+reg [15:0] pc;
+wire [15:0] pc_Out;
+
+branchMux test (.branch(branch), .adderOut(adderOut),
+                .pc(pc), .pc_Out(pc_Out));
+
+initial begin
+branch = 0;
+adderOut = 16'b0000000000000000;
+pc = 16'b0000000011111111;
+#5;
+branch = 1;
+#5;
+$finish;
+end
+endmodule

@@ -1,0 +1,30 @@
+`timescale 1ns / 1ps
+
+module registerFile_tb();
+reg reset;
+reg writeRegEn;
+reg [15:0] writeDataIn;
+reg [15:0] dataIn;
+wire [15:0] dataOut;
+wire [15:0] rs1Value;
+wire [15:0] rs2Value;
+
+registerFile test (.reset(reset), .writeRegEn(writeRegEn), .writeDataIn(writeDataIn),
+                   .dataIn(dataIn), .dataOut(dataOut), .rs1Value(rs1Value), 
+                   .rs2Value(rs2Value));
+                   
+initial begin
+reset = 0;
+writeRegEn = 0;
+writeDataIn = 16'b0000000000000001;
+dataIn = 16'b0000000000000010;
+#5;
+reset = 1;
+#5;
+reset = 0;
+writeRegEn=1;
+#5;
+$finish;
+
+end
+endmodule

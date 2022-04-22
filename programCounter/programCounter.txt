@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+
+module programCounter(input [15:0] nextCounter,
+                      input reset,
+                      output reg [15:0] currentCounter);
+        
+integer i;
+integer k;
+                      
+always@(*) begin
+    if(reset==1'b1) begin
+        for (i=0;i<16;i=i+1) begin
+            currentCounter[i]=1'b0;
+        end        
+    end
+    if(reset==1'b0) begin
+        for(k=0;k<16;k=k+1)begin
+            currentCounter[k]=nextCounter[k];
+        end
+    end
+end //always                 
+                 
+endmodule

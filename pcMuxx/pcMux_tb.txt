@@ -1,0 +1,25 @@
+`timescale 1ns / 1ps
+
+module muxPC_tb();
+    reg [15:0] rs1_reg;
+    reg [15:0] pc;
+    reg branch;
+    reg jump;
+    wire [15:0] rs1_out;
+    
+muxPC test (.rs1_reg(rs1_reg), .pc(pc), .branch(branch), .jump(jump), .rs1_out(rs1_out));
+
+initial begin
+    branch = 0;
+    jump = 0;
+    pc = 16'b1111111111111111;
+    rs1_reg = 16'b0000000000000000;
+    #5;
+    branch = 1;
+    #5;
+    pc = 16'b0000000000000000;
+    rs1_reg = 16'b1111111111111111;
+    #5 $finish;
+end    
+
+endmodule

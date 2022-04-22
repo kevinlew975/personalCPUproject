@@ -1,0 +1,32 @@
+`timescale 1ns / 1ps
+
+
+module immMux_tb();
+    reg imm_Control_6;
+    reg imm_Control_3;
+    reg [15:0] rs2ValueReg;
+    reg [15:0] rs2ValueImm;
+    wire [15:0] rs2Value;
+    
+immMux test (.imm_Control_6(imm_Control_6), .imm_Control_3(imm_Control_3),
+             .rs2ValueReg(rs2ValueReg), .rs2ValueImm(rs2ValueImm),
+             .rs2Value(rs2Value));
+
+initial begin
+imm_Control_6 = 0;
+imm_Control_3 = 0;
+rs2ValueReg = 16'b0000000000000000;
+rs2ValueImm = 16'b0000000000000000;
+#5;
+imm_Control_6 = 1;
+rs2ValueImm = 16'b0000000000111111;
+#5;
+imm_Control_6 = 0;
+imm_Control_3 = 0;
+#5;
+imm_Control_6 = 0;
+imm_Control_3 = 1;
+rs2ValueImm = 16'b0000000000000111;
+#5 $finish;
+end    
+endmodule

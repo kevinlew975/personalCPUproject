@@ -1,0 +1,21 @@
+`timescale 1ns / 1ps
+
+module memRegMux_tb();
+reg memToReg;
+reg [15:0] readData;
+reg [15:0] aluResult;
+wire [15:0] memRegOut;
+
+memRegMux test (.memToReg(memToReg), .readData(readData), .aluResult(aluResult),
+                .memRegOut(memRegOut));
+                
+                
+initial begin
+    memToReg = 0;
+    readData = 16'b0000000000000000;
+    aluResult = 16'b0000000011111111;
+    #5;
+    memToReg = 1;
+    #5 $finish;
+end                
+endmodule

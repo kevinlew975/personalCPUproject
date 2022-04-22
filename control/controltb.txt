@@ -1,0 +1,31 @@
+`timescale 1ns / 1ps
+module control_tb();
+reg [15:0] inst;
+reg reset;
+wire [2:0] aluControl;
+wire regWriteEnable;
+wire imm_Control_6;
+wire imm_Control_3;
+wire jump;
+wire branch;
+wire memread;
+wire memwrite;
+wire memtoreg;
+
+control test(.inst(inst), .reset(reset), .aluControl(aluControl),
+             .regWriteEnable(regWriteEnable), .imm_Control_6(imm_Control_6),
+             .imm_Control_3(imm_Control_3), .jump(jump), .branch(branch),
+             .memread(memread), .memwrite(memwrite), .memtoreg(memtoreg));
+             
+initial begin
+    inst = 16'b0010000011111111;
+    reset = 0;
+    #5;
+    inst=16'b0110000011111111;
+    #5;
+    reset=1;
+    #5 $finish;
+
+
+end
+endmodule

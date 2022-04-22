@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+
+module programCounter_tb();
+reg reset;
+reg [15:0] nextCounter;
+wire [15:0] currentCounter;
+
+programCounter test (.reset(reset), .nextCounter(nextCounter),
+                     .currentCounter(currentCounter));
+                     
+initial begin
+    reset = 0;
+    nextCounter = 16'b0000000000000001;
+    #5;
+    nextCounter=16'b0000000000000010;
+    #5;
+    reset=1;
+    nextCounter=16'b0000000000000011;
+    #5;
+    $finish;
+end
+endmodule

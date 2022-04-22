@@ -1,0 +1,31 @@
+`timescale 1ns / 1ps
+module ALU_tb();
+reg [2:0] aluControl;
+reg [15:0] rs1Value;
+reg [15:0] rs2Value;
+reg reset;
+wire [15:0] rdValue;
+
+ALU test(.aluControl(aluControl), .rs1Value(rs1Value), .rs2Value(rs2Value),
+         .rdValue(rdValue), .reset(reset));
+         
+initial begin
+reset=0;
+aluControl = 3'b000;
+rs1Value = 16'b0000000000000011;
+rs2Value = 16'b0000000000000001;
+#5;
+aluControl=3'b001;
+#5;
+aluControl=3'b010;
+#5;
+aluControl=3'b011;
+#5;
+aluControl=3'b100;
+#5;
+reset=1;
+#5;
+$finish;
+
+end
+endmodule

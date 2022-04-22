@@ -1,0 +1,21 @@
+`timescale 1ns / 1ps
+
+module jumpMux_tb();
+reg jump;
+reg [15:0] branchMux;
+reg [15:0] aluResult;
+wire [15:0] nextPC;
+
+jumpMux test (.jump(jump), .branchMux(branchMux), .aluResult(aluResult),
+              .nextPC(nextPC));
+              
+initial begin
+jump = 0;
+branchMux = 16'b0000000000001111;
+aluResult = 16'b0000000011111111;
+#5;
+jump = 1;
+#5;
+$finish;
+end
+endmodule

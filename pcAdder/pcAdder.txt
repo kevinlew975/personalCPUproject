@@ -1,0 +1,14 @@
+`timescale 1ns / 1ps
+module pcAdder(input [15:0] pc,
+               input reset,
+               output reg [15:0] incrPC);
+              
+always@(*) begin
+    if(reset == 1'b1) begin
+        incrPC = 16'b0000000000000000;
+    end 
+    if (reset ==1'b0) begin
+        incrPC = pc + 1;
+    end
+end
+endmodule
